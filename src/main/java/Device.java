@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Device {
     private String manufacturer;
     private float price;
@@ -36,9 +38,23 @@ public class Device {
     @Override
     public String toString() {
 
-        return "Device: manufacturer = " + getManufacturer()  + ", price = " + getPrice() +
+        return getClass().getSimpleName() + ": manufacturer = " + getManufacturer()  + ", price = " + getPrice() +
                 ", serialNumber = " + getSerialNumber();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Device device = (Device) o;
+        return Float.compare(device.price, price) == 0 &&
+                Objects.equals(manufacturer, device.manufacturer) &&
+                Objects.equals(serialNumber, device.serialNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(manufacturer, price, serialNumber);
+    }
 }
 
